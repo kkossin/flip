@@ -25,9 +25,13 @@ public class PlayerController : MonoBehaviour {
 
     void jump()
     {
-        if (Input.GetButtonDown("Jump") && grounded)
+        if (Input.GetButtonDown("Jump") && grounded && !flipped)
         {
             fallSpeed = -jumpSpeed;
+        }
+        else if (Input.GetButtonDown("Jump") && grounded && flipped)
+        {
+            fallSpeed = jumpSpeed;
         }
     }
 
@@ -71,11 +75,11 @@ public class PlayerController : MonoBehaviour {
     {
         if (!flipped)
         {
-            grounded = (Physics.Raycast(transform.position, -transform.up, controller.height));
+            grounded = (Physics.Raycast(transform.position, -transform.up, controller.height*1.1f));
         }
         else
         {
-            grounded = (Physics.Raycast(transform.position, transform.up, controller.height));
+            grounded = (Physics.Raycast(transform.position, transform.up, controller.height*1.1f));
         }
     }
 }
