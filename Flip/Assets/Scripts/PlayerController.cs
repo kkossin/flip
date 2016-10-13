@@ -1,19 +1,23 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 
 public class PlayerController : MonoBehaviour {
-    public float jumpSpeed;
-    public float fallSpeed;
-    public float gravity;
     public bool grounded;
     public bool flipped;
+    public bool dead;
+
+    private float jumpSpeed = 4;
+    private float fallSpeed = 0;
+    private float gravity = 8;
 
     private CharacterController controller; 
 
     void Start () {
         controller = GetComponent<CharacterController>();
-        grounded = true;
+        grounded = false;
         flipped = false;
+        dead = false;
     }
 	
 	void Update () {
@@ -21,6 +25,11 @@ public class PlayerController : MonoBehaviour {
         jump();
         fall();
         flip();
+        checkForDeath();
+        if (dead) {
+            SceneManager.LoadScene("Prototype");
+            dead = false;
+        }
     }
 
     void jump()
@@ -75,11 +84,16 @@ public class PlayerController : MonoBehaviour {
     {
         if (!flipped)
         {
-            grounded = (Physics.Raycast(transform.position, -transform.up, controller.height*1.1f));
+            grounded = (Physics2D.Raycast(transform.position, -Vector2.up, controller.height/2.0f));
         }
         else
         {
-            grounded = (Physics.Raycast(transform.position, transform.up, controller.height*1.1f));
+            grounded = (Physics2D.Raycast(transform.position, Vector2.up, controller.height/2.0f));
         }
+    }
+
+    void checkForDeath ()
+    {
+        dead = Physics2D.Raycast(transform.position, Vector2.right, controller.height / 2.0f);
     }
 }
