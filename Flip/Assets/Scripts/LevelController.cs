@@ -9,36 +9,23 @@ public class LevelController : MonoBehaviour {
     private GameObject[] chunks = new GameObject[]{ };
 
     public GameObject levelPlain;
+    public GameObject level1;
+    public GameObject level2;
+    public GameObject level3;
 
-    void Start() {
+    void Start()
+    {
         generate = false;
 
-        GameObject chunk1 = (GameObject)Instantiate(levelPlain);
-        chunk1.transform.position = new Vector2(-12.5f, 0.0f);
-        activeChunks.Enqueue(chunk1);
-
-        GameObject chunk2 = (GameObject)Instantiate(levelPlain);
-        chunk2.transform.position = new Vector2(-7.5f, 0.0f);
-        activeChunks.Enqueue(chunk2);
-
-        GameObject chunk3 = (GameObject)Instantiate(levelPlain);
-        chunk3.transform.position = new Vector2(-2.5f, 0.0f);
-        activeChunks.Enqueue(chunk3);
-
-        GameObject chunk4 = (GameObject)Instantiate(levelPlain);
-        chunk4.transform.position = new Vector2(2.5f, 0.0f);
-        activeChunks.Enqueue(chunk4);
-            
-        GameObject chunk5 = (GameObject)Instantiate(levelPlain);
-        chunk5.transform.position = new Vector2(7.5f, 0.0f);
-        activeChunks.Enqueue(chunk5);
-
-        GameObject chunk6 = (GameObject)Instantiate(levelPlain);
-        chunk6.transform.position = new Vector2(12.5f, 0.0f);
-        activeChunks.Enqueue(chunk6);
+        activeChunks.Enqueue((GameObject)Instantiate(levelPlain, new Vector2(-7.5f, 0.0f), Quaternion.identity));
+        activeChunks.Enqueue((GameObject)Instantiate(levelPlain, new Vector2(-2.5f, 0.0f), Quaternion.identity));
+        activeChunks.Enqueue((GameObject)Instantiate(levelPlain, new Vector2(2.5f, 0.0f), Quaternion.identity));
+        activeChunks.Enqueue((GameObject)Instantiate(levelPlain, new Vector2(7.5f, 0.0f), Quaternion.identity));
+        activeChunks.Enqueue((GameObject)Instantiate(levelPlain, new Vector2(12.5f, 0.0f), Quaternion.identity));
     }
 	
-	void Update () {
+	void Update ()
+    {
 	    foreach (GameObject chunk in activeChunks)
         {
             chunk.transform.position = new Vector2(chunk.transform.position.x - speed, 0);
@@ -49,10 +36,33 @@ public class LevelController : MonoBehaviour {
         {
             GameObject deadChunk = activeChunks.Dequeue();
             Destroy(deadChunk);
-            GameObject newChunk = (GameObject)Instantiate(levelPlain);
-            newChunk.transform.position = new Vector2(12.5f, 0.0f);
-            activeChunks.Enqueue(newChunk);
+            int type = Random.Range(1, 4);
+
+            switch (type)
+            {
+                case 0: //not currently used
+                    {
+                        activeChunks.Enqueue((GameObject)Instantiate(levelPlain, new Vector2(12.5f, 0.0f), Quaternion.identity));
+                        break;
+                    }
+                case 1:
+                    {
+                        activeChunks.Enqueue((GameObject)Instantiate(level1, new Vector2(12.5f, 0.0f), Quaternion.identity));
+                        break;
+                    }
+                case 2:
+                    {
+                        activeChunks.Enqueue((GameObject)Instantiate(level2, new Vector2(12.5f, 0.0f), Quaternion.identity));
+                        break;
+                    }
+                case 3:
+                    {
+                        activeChunks.Enqueue((GameObject)Instantiate(level3, new Vector2(12.5f, 0.0f), Quaternion.identity));
+                        break;
+                    }
+            }
             generate = false;
+
         }
     }
 }
