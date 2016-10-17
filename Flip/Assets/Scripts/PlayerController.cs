@@ -13,10 +13,12 @@ public class PlayerController : MonoBehaviour
     private float gravity = 8;
 
     private CharacterController controller;
+    private SpriteRenderer sprite;
 
     void Start()
     {
         controller = GetComponent<CharacterController>();
+        sprite = GetComponent<SpriteRenderer>();
         grounded = false;
         flipped = false;
         dead = false;
@@ -94,6 +96,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetButtonDown("Fire1"))
         {
             flipped = !flipped;
+            sprite.flipY = !sprite.flipY;
         }
     }
 
@@ -111,6 +114,6 @@ public class PlayerController : MonoBehaviour
 
     void checkForDeath()
     {
-        dead = Physics2D.Raycast(transform.position, Vector2.right, controller.height / 2.0f);
+        dead = Physics2D.Raycast(transform.position, Vector2.right, transform.lossyScale.x/ 2.0f);
     }
 }
