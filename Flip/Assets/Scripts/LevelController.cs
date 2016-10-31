@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -8,6 +9,10 @@ public class LevelController : MonoBehaviour {
     private int alternate;
     private Queue<GameObject> activeChunks = new Queue<GameObject>();
     private GameObject[] chunks = new GameObject[]{ };
+
+    private float seconds = 0;
+    private int minutes = 0;
+    public Text timeDisplay;
 
     public GameObject levelPlain; //must be a better way to do this...
     public GameObject level1;
@@ -37,6 +42,7 @@ public class LevelController : MonoBehaviour {
         activeChunks.Enqueue((GameObject)Instantiate(levelPlain, new Vector2(2.5f, 0.0f), Quaternion.identity));
         activeChunks.Enqueue((GameObject)Instantiate(levelPlain, new Vector2(7.5f, 0.0f), Quaternion.identity));
         activeChunks.Enqueue((GameObject)Instantiate(levelPlain, new Vector2(12.5f, 0.0f), Quaternion.identity));
+
     }
 	
 	void Update ()
@@ -51,6 +57,10 @@ public class LevelController : MonoBehaviour {
         {
             GameObject deadChunk = activeChunks.Dequeue();
             Destroy(deadChunk);
+            seconds += Time.timeScale;
+            if (seconds >= 60) { seconds = 0; minutes = minutes + 1; }
+            //timeDisplay.text = "Score: " + minutes.ToString() + ":" + seconds.ToString();
+            timeDisplay.text = "Score: " + seconds.ToString();
 
             int type = 0;
             if (alternate > 0) { type = Random.Range(0, 16); }  //Generate a random number between 0 and 15 to decide which segment comes next

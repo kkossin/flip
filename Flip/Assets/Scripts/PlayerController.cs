@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour
     public bool flipped;
     public bool dead;
 
-    private float jumpSpeed = 4;
+    private float jumpSpeed = 6;
     private float fallSpeed = 0;
     private float gravity = 8;
 
@@ -114,6 +114,10 @@ public class PlayerController : MonoBehaviour
 
     void checkForDeath()
     {
-        dead = Physics2D.Raycast(transform.position, Vector2.right, transform.lossyScale.x/ 2.0f);
+        dead = Physics2D.Raycast(transform.position, Vector2.right, transform.lossyScale.x / 2.0f);
+        if (Physics2D.Raycast(transform.position, Vector2.down, transform.lossyScale.y / 2.0f))
+        {
+
+        }
     }
 }
