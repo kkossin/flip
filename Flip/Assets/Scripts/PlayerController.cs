@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
 
     private CharacterController controller;
     private SpriteRenderer sprite;
+    private RaycastHit2D hit;
 
     void Start()
     {
@@ -26,16 +27,16 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        isGrounded();
-        jump();
-        fall();
-        flip();
-        checkForDeath();
         if (dead)
         {
             SceneManager.LoadScene("Prototype");
             dead = false;
         }
+        isGrounded();
+        jump();
+        fall();
+        flip();
+        checkForDeath();     
     }
 
     void jump()
@@ -114,10 +115,40 @@ public class PlayerController : MonoBehaviour
 
     void checkForDeath()
     {
-        dead = Physics2D.Raycast(transform.position, Vector2.right, transform.lossyScale.x / 2.0f);
-        if (Physics2D.Raycast(transform.position, Vector2.down, transform.lossyScale.y / 2.0f))
-        {
+        Vector2 top = new Vector2(transform.position.x, transform.position.y + transform.lossyScale.y); //check collision with top of character
+        dead = Physics2D.Raycast(top, transform.right, transform.lossyScale.x);
+        Vector2 bottom = new Vector2(transform.position.x, transform.position.y - transform.lossyScale.y); //check collision with bottom of character
+        dead = Physics2D.Raycast(bottom, transform.right, transform.lossyScale.x);
 
+        hit = Physics2D.Raycast(transform.position, -transform.up, transform.lossyScale.y);
+        if (hit && hit.collider.gameObject.CompareTag("Rocket"))
+        {
+            dead = true;
+        }
+    }
+
+    void onTriggerEnter2D(Collider2D other)
+    {
+        print("Hit1");
+        if (other.gameObject.CompareTag("Rocket")) {
+            dead = true;
+        }
+        else if (other.gameObject.CompareTag("Spikes"))
+        {
+            dead = true;
+        }
+    }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        print("Hit2");
+        if (collision.gameObject.CompareTag("Rocket"))
+        {          
+            dead = true;
+        }
+        else if (collision.gameObject.CompareTag("Spikes"))
+        {
+            dead = true;
         }
     }
 }
