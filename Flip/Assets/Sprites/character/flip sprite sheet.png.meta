@@ -1,9 +1,17 @@
 fileFormatVersion: 2
 guid: aeded0ddd18bf504d92130f450c4f714
-timeCreated: 1476429998
+timeCreated: 1478136589
 licenseType: Free
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: flip sprite sheet_0
+    21300002: flip sprite sheet_1
+    21300004: flip sprite sheet_2
+    21300006: flip sprite sheet_3
+    21300008: flip sprite sheet_4
+    21300010: flip sprite sheet_5
+    21300012: flip sprite sheet_6
+    21300014: flip sprite sheet_7
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -30,7 +38,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     filterMode: -1
-    aniso: -1
+    aniso: 16
     mipBias: -1
     wrapMode: 1
   nPOTScale: 0
@@ -38,7 +46,7 @@ TextureImporter:
   rGBM: 0
   compressionQuality: 50
   allowsAlphaSplitting: 0
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -51,7 +59,111 @@ TextureImporter:
   buildTargetSettings: []
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: flip sprite sheet_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 570
+        width: 475
+        height: 510
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: flip sprite sheet_1
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 570
+        width: 486
+        height: 510
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 30, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: flip sprite sheet_2
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 572
+        width: 477
+        height: 508
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: flip sprite sheet_3
+      rect:
+        serializedVersion: 2
+        x: 1440
+        y: 578
+        width: 480
+        height: 502
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: flip sprite sheet_4
+      rect:
+        serializedVersion: 2
+        x: 3
+        y: 67
+        width: 481
+        height: 487
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: flip sprite sheet_5
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 60
+        width: 478
+        height: 496
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: flip sprite sheet_6
+      rect:
+        serializedVersion: 2
+        x: 962
+        y: 58
+        width: 479
+        height: 495
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: flip sprite sheet_7
+      rect:
+        serializedVersion: 2
+        x: 1444
+        y: 68
+        width: 476
+        height: 483
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
     outline: []
   spritePackingTag: 
   userData: 
