@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: aeded0ddd18bf504d92130f450c4f714
-timeCreated: 1478136589
+timeCreated: 1478205204
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -64,10 +64,10 @@ TextureImporter:
       name: flip sprite sheet_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 570
-        width: 475
-        height: 510
+        x: 125
+        y: 580
+        width: 290
+        height: 485
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -77,23 +77,23 @@ TextureImporter:
       name: flip sprite sheet_1
       rect:
         serializedVersion: 2
-        x: 480
-        y: 570
-        width: 486
-        height: 510
+        x: 613
+        y: 577
+        width: 290
+        height: 485
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 30, z: 0, w: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
       name: flip sprite sheet_2
       rect:
         serializedVersion: 2
-        x: 960
-        y: 572
-        width: 477
-        height: 508
+        x: 1120
+        y: 576
+        width: 290
+        height: 485
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -103,10 +103,10 @@ TextureImporter:
       name: flip sprite sheet_3
       rect:
         serializedVersion: 2
-        x: 1440
-        y: 578
-        width: 480
-        height: 502
+        x: 1600
+        y: 582
+        width: 290
+        height: 485
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -116,10 +116,10 @@ TextureImporter:
       name: flip sprite sheet_4
       rect:
         serializedVersion: 2
-        x: 3
-        y: 67
-        width: 481
-        height: 487
+        x: 129
+        y: 65
+        width: 290
+        height: 485
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -129,10 +129,10 @@ TextureImporter:
       name: flip sprite sheet_5
       rect:
         serializedVersion: 2
-        x: 480
-        y: 60
-        width: 478
-        height: 496
+        x: 624
+        y: 61
+        width: 290
+        height: 485
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -142,10 +142,10 @@ TextureImporter:
       name: flip sprite sheet_6
       rect:
         serializedVersion: 2
-        x: 962
-        y: 58
-        width: 479
-        height: 495
+        x: 1101
+        y: 63
+        width: 290
+        height: 485
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -155,10 +155,10 @@ TextureImporter:
       name: flip sprite sheet_7
       rect:
         serializedVersion: 2
-        x: 1444
-        y: 68
-        width: 476
-        height: 483
+        x: 1612
+        y: 67
+        width: 290
+        height: 485
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}

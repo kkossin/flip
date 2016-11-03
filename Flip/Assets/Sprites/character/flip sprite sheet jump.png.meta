@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: cf17ca548c29a0e47b3c988dd9473bdc
-timeCreated: 1478136653
+timeCreated: 1478205503
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -12,6 +12,7 @@ TextureImporter:
     21300010: flip sprite sheet jump_5
     21300012: flip sprite sheet jump_6
     21300014: flip sprite sheet jump_7
+    21300016: flip sprite sheet jump_9
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -64,12 +65,12 @@ TextureImporter:
       name: flip sprite sheet jump_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 570
-        width: 480
-        height: 510
+        x: 70
+        y: 577
+        width: 366
+        height: 488
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
@@ -77,12 +78,12 @@ TextureImporter:
       name: flip sprite sheet jump_1
       rect:
         serializedVersion: 2
-        x: 480
-        y: 570
-        width: 480
-        height: 510
+        x: 592
+        y: 582
+        width: 366
+        height: 488
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
@@ -90,25 +91,12 @@ TextureImporter:
       name: flip sprite sheet jump_2
       rect:
         serializedVersion: 2
-        x: 960
-        y: 570
-        width: 480
-        height: 510
+        x: 1098
+        y: 592
+        width: 366
+        height: 488
       alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: flip sprite sheet jump_3
-      rect:
-        serializedVersion: 2
-        x: 1440
-        y: 570
-        width: 480
-        height: 510
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
@@ -116,12 +104,12 @@ TextureImporter:
       name: flip sprite sheet jump_4
       rect:
         serializedVersion: 2
-        x: 0
-        y: 60
-        width: 480
-        height: 510
+        x: 1548
+        y: 592
+        width: 366
+        height: 488
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
@@ -129,12 +117,12 @@ TextureImporter:
       name: flip sprite sheet jump_5
       rect:
         serializedVersion: 2
-        x: 480
-        y: 60
-        width: 480
-        height: 510
+        x: 46
+        y: 86
+        width: 366
+        height: 488
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
@@ -142,12 +130,12 @@ TextureImporter:
       name: flip sprite sheet jump_6
       rect:
         serializedVersion: 2
-        x: 960
-        y: 60
-        width: 480
-        height: 510
+        x: 589
+        y: 57
+        width: 366
+        height: 488
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
@@ -155,12 +143,25 @@ TextureImporter:
       name: flip sprite sheet jump_7
       rect:
         serializedVersion: 2
-        x: 1440
-        y: 60
-        width: 480
-        height: 510
+        x: 1067
+        y: 58
+        width: 366
+        height: 488
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: flip sprite sheet jump_9
+      rect:
+        serializedVersion: 2
+        x: 1545
+        y: 71
+        width: 366
+        height: 488
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
