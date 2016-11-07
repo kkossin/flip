@@ -8,17 +8,19 @@ public class PlayerController : MonoBehaviour
     public bool flipped;
     public bool dead;
 
-    private float jumpSpeed = 6;
-    private float fallSpeed = 0;
-    private float gravity = 8;
+    private float jumpSpeed = 14;
+    private float fallSpeed = 6;
+    private float gravity = 20;
 
-    private CharacterController controller;
+    //private CharacterController controller;
+    private Rigidbody2D character;
     private SpriteRenderer sprite;
     private RaycastHit2D hit;
 
     void Start()
     {
-        controller = GetComponent<CharacterController>();
+        //controller = GetComponent<CharacterController>();
+        character = GetComponent<Rigidbody2D>();
         sprite = GetComponent<SpriteRenderer>();
         grounded = false;
         flipped = false;
@@ -76,7 +78,7 @@ public class PlayerController : MonoBehaviour
             {
                 if (fallSpeed > 0) fallSpeed = 0;
             }
-            controller.Move(new Vector2(0, -fallSpeed) * Time.deltaTime);
+            character.MovePosition(new Vector2(0, transform.position.y - fallSpeed * Time.deltaTime));
         }
         else
         {
@@ -88,7 +90,7 @@ public class PlayerController : MonoBehaviour
             {
                 if (fallSpeed < 0) fallSpeed = 0;
             }
-            controller.Move(new Vector2(0, -fallSpeed) * Time.deltaTime);
+            character.MovePosition(new Vector2(0, transform.position.y - fallSpeed * Time.deltaTime));
         }
     }
 
@@ -105,11 +107,11 @@ public class PlayerController : MonoBehaviour
     {
         if (!flipped)
         {
-            grounded = (Physics2D.Raycast(transform.position, -Vector2.up, controller.height / 2.0f));
+            grounded = (Physics2D.Raycast(transform.position, -Vector2.up, 0.5f));
         }
         else
         {
-            grounded = (Physics2D.Raycast(transform.position, Vector2.up, controller.height / 2.0f));
+            grounded = (Physics2D.Raycast(transform.position, Vector2.up, 0.5f));
         }
     }
 
@@ -134,19 +136,6 @@ public class PlayerController : MonoBehaviour
             dead = true;
         }
         else if (other.gameObject.CompareTag("Spikes"))
-        {
-            dead = true;
-        }
-    }
-
-    void OnCollisionEnter2D(Collision2D collision)
-    {
-        print("Hit2");
-        if (collision.gameObject.CompareTag("Rocket"))
-        {          
-            dead = true;
-        }
-        else if (collision.gameObject.CompareTag("Spikes"))
         {
             dead = true;
         }
