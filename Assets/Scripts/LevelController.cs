@@ -4,7 +4,9 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class LevelController : MonoBehaviour {
-    private float speed = 0.05f;
+    private float speed;
+    private float maxSpeed;
+    private float frequency;
     private bool generate;
     private int alternate;
     private Queue<GameObject> activeChunks = new Queue<GameObject>();
@@ -12,6 +14,7 @@ public class LevelController : MonoBehaviour {
 
     private float seconds = 0;
     private int minutes = 0;
+    public int difficulty;
     public Text timeDisplay;
 
     public GameObject levelPlain; //must be a better way to do this...
@@ -33,6 +36,26 @@ public class LevelController : MonoBehaviour {
 
     void Start()
     {
+        //Easy
+        switch (difficulty)
+        {
+            case 1: //Easy
+                speed = 0.03f;
+                maxSpeed = 0.05f;
+                frequency = 1;
+                break;
+            case 2: //Medium
+                speed = 0.04f;
+                maxSpeed = 0.07f;
+                frequency = 2;
+                break;
+            case 3: //Hard
+                speed = 0.05f;
+                maxSpeed = 0.09f;
+                frequency = 3;
+                break;
+        }
+
         generate = false;  //we'll set this as true each time we want a new segment
         alternate = 1; //we alternate between empty and non-empty segments
 
@@ -47,6 +70,11 @@ public class LevelController : MonoBehaviour {
 	
 	void Update ()
     {
+        if (speed < maxSpeed)
+        {
+            speed = speed * 1.0001f;
+        }
+
 	    foreach (GameObject chunk in activeChunks)
         {
             chunk.transform.position = new Vector2(chunk.transform.position.x - speed, 0);
@@ -63,9 +91,9 @@ public class LevelController : MonoBehaviour {
             timeDisplay.text = "Score: " + seconds.ToString();
 
             int type = 0;
-            if (alternate > 0) { type = Random.Range(0, 16); }  //Generate a random number between 0 and 15 to decide which segment comes next
+            if (alternate > 0) { type = Random.Range(1, 16); }  //Generate a random number between 0 and 15 to decide which segment comes next
             alternate += 1;
-            if (alternate > 2) { alternate = 0; }
+            if (alternate > frequency) { alternate = 0; }
 
             switch (type) //depending on the number, a level segment is generated
             {             //oddball code style ... please forgive me
