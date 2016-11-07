@@ -15,7 +15,8 @@ public class PlayerController : MonoBehaviour
     //private CharacterController controller;
     private Rigidbody2D character;
     private SpriteRenderer sprite;
-    private RaycastHit2D hit;
+    private RaycastHit2D hit;  //shoots up
+    private RaycastHit2D hit2; //shoots down
 
     void Start()
     {
@@ -31,7 +32,7 @@ public class PlayerController : MonoBehaviour
     {
         if (dead)
         {
-            SceneManager.LoadScene("Prototype");
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             dead = false;
         }
         isGrounded();
@@ -55,17 +56,17 @@ public class PlayerController : MonoBehaviour
 
     void fall()
     {
-        if (transform.position.y < -2.00f)
+        if (transform.position.y < -2.05f)
         {
-            fallSpeed = 0;
-            grounded = true;
-            transform.position = new Vector2(transform.position.x, -2.00f);
+            //fallSpeed = 0;
+            //grounded = true;
+            //transform.position = new Vector2(transform.position.x, -2.00f);
         }
-        else if (transform.position.y > 2.05f)
+        else if (transform.position.y > 2.02f)
         {
-            fallSpeed = 0;
-            grounded = true;
-            transform.position = new Vector2(transform.position.x, 2.05f);
+            //fallSpeed = 0;
+            //grounded = true;
+            //transform.position = new Vector2(transform.position.x, 2.05f);
         }
 
         if (!flipped)
@@ -78,7 +79,7 @@ public class PlayerController : MonoBehaviour
             {
                 if (fallSpeed > 0) fallSpeed = 0;
             }
-            character.MovePosition(new Vector2(0, transform.position.y - fallSpeed * Time.deltaTime));
+            character.MovePosition(new Vector2(-5.5f, transform.position.y - fallSpeed * Time.deltaTime));
         }
         else
         {
@@ -90,7 +91,7 @@ public class PlayerController : MonoBehaviour
             {
                 if (fallSpeed < 0) fallSpeed = 0;
             }
-            character.MovePosition(new Vector2(0, transform.position.y - fallSpeed * Time.deltaTime));
+            character.MovePosition(new Vector2(-5.5f, transform.position.y - fallSpeed * Time.deltaTime));
         }
     }
 
@@ -122,9 +123,21 @@ public class PlayerController : MonoBehaviour
         Vector2 bottom = new Vector2(transform.position.x, transform.position.y - transform.lossyScale.y); //check collision with bottom of character
         dead = Physics2D.Raycast(bottom, transform.right, transform.lossyScale.x);
 
-        hit = Physics2D.Raycast(transform.position, -transform.up, transform.lossyScale.y);
+        hit = Physics2D.Raycast(transform.position, transform.up, 0.5f);
+        hit2 = Physics2D.Raycast(transform.position, -transform.up, 0.5f);
         if (hit && hit.collider.gameObject.CompareTag("Rocket"))
         {
+            print("Hit2");
+            dead = true;
+        }
+        else if (hit2 && hit2.collider.gameObject.CompareTag("Rocket"))
+        {
+            print("Hit2");
+            dead = true;
+        }
+        else if (hit2 && hit2.collider.gameObject.CompareTag("Spikes"))
+        {
+            print("Hit2");
             dead = true;
         }
     }

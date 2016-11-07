@@ -10,7 +10,6 @@ public class LevelController : MonoBehaviour {
     private bool generate;
     private int alternate;
     private Queue<GameObject> activeChunks = new Queue<GameObject>();
-    private GameObject[] chunks = new GameObject[]{ };
 
     private float seconds = 0;
     private int minutes = 0;
@@ -39,6 +38,11 @@ public class LevelController : MonoBehaviour {
         //Easy
         switch (difficulty)
         {
+            case 0:
+                speed = 0.03f;
+                maxSpeed = 0.03f;
+                frequency = 0;
+                break;
             case 1: //Easy
                 speed = 0.03f;
                 maxSpeed = 0.05f;
@@ -65,7 +69,6 @@ public class LevelController : MonoBehaviour {
         activeChunks.Enqueue((GameObject)Instantiate(levelPlain, new Vector2(2.5f, 0.0f), Quaternion.identity));
         activeChunks.Enqueue((GameObject)Instantiate(levelPlain, new Vector2(7.5f, 0.0f), Quaternion.identity));
         activeChunks.Enqueue((GameObject)Instantiate(levelPlain, new Vector2(12.5f, 0.0f), Quaternion.identity));
-
     }
 	
 	void Update ()
