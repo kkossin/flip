@@ -5,12 +5,12 @@ using System.Collections;
 public class PlayerController : MonoBehaviour
 {
     public bool grounded;
-    public bool flipped;
-    public bool dead;
+    private bool flipped;
+    private bool dead;
 
-    private float jumpSpeed = 14;
+    private float jumpSpeed = 8;
     private float fallSpeed = 6;
-    private float gravity = 20;
+    private float gravity = 12;
 
     //private CharacterController controller;
     private Rigidbody2D character;
@@ -58,15 +58,15 @@ public class PlayerController : MonoBehaviour
     {
         if (transform.position.y < -2.05f)
         {
-            //fallSpeed = 0;
-            //grounded = true;
-            //transform.position = new Vector2(transform.position.x, -2.00f);
+            fallSpeed = 0;
+            grounded = true;
+            transform.position = new Vector2(transform.position.x, -2.05f);
         }
         else if (transform.position.y > 2.02f)
         {
-            //fallSpeed = 0;
-            //grounded = true;
-            //transform.position = new Vector2(transform.position.x, 2.05f);
+            fallSpeed = 0;
+            grounded = true;
+            transform.position = new Vector2(transform.position.x, 2.02f);
         }
 
         if (!flipped)
