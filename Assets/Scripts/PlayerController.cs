@@ -7,19 +7,15 @@ public class PlayerController : MonoBehaviour
     public bool grounded;
     private bool flipped;
     private bool dead;
-<<<<<<< HEAD
 
-    private float jumpSpeed = 7;
-=======
-	private Animator animator;                  
     private float jumpSpeed = 8;
->>>>>>> 4008a634867049d5699658a189d89015ac370890
     private float fallSpeed = 6;
     private float gravity = 11;
 
     //private CharacterController controller;
     private Rigidbody2D character;
     private SpriteRenderer sprite;
+    private Animator animator;
     private RaycastHit2D hit;  //shoots up
     private RaycastHit2D hit2; //shoots down
 
@@ -55,14 +51,9 @@ public class PlayerController : MonoBehaviour
     void jump()
     {
         if (Input.GetButtonDown("Fire2") && grounded && !flipped)
-<<<<<<< HEAD
         {
-            fallSpeed = -jumpSpeed;
-=======
-        {	
 			animator.SetTrigger ("jump");
 			fallSpeed = -jumpSpeed;
->>>>>>> 4008a634867049d5699658a189d89015ac370890
         }
         else if (Input.GetButtonDown("Fire2") && grounded && flipped)
         {
