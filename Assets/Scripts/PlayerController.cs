@@ -8,9 +8,9 @@ public class PlayerController : MonoBehaviour
     private bool flipped;
     private bool dead;
 
-    private float jumpSpeed = 8;
+    private float jumpSpeed = 7;
     private float fallSpeed = 6;
-    private float gravity = 12;
+    private float gravity = 11;
 
     //private CharacterController controller;
     private Rigidbody2D character;
@@ -30,25 +30,29 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        jump();
+        flip();
+    }
+
+    void FixedUpdate()
+    {
         if (dead)
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             dead = false;
         }
         isGrounded();
-        jump();
         fall();
-        flip();
         checkForDeath();     
     }
 
     void jump()
     {
-        if (Input.GetButtonDown("Jump") && grounded && !flipped)
+        if (Input.GetButtonDown("Fire2") && grounded && !flipped)
         {
             fallSpeed = -jumpSpeed;
         }
-        else if (Input.GetButtonDown("Jump") && grounded && flipped)
+        else if (Input.GetButtonDown("Fire2") && grounded && flipped)
         {
             fallSpeed = jumpSpeed;
         }

@@ -71,7 +71,7 @@ public class LevelController : MonoBehaviour {
         activeChunks.Enqueue((GameObject)Instantiate(levelPlain, new Vector2(12.5f, 0.0f), Quaternion.identity));
     }
 	
-	void Update ()
+	void FixedUpdate ()
     {
         if (speed < maxSpeed)
         {
