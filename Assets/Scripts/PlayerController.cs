@@ -4,24 +4,24 @@ using System.Collections;
 
 public class PlayerController : MonoBehaviour
 {
-    public bool grounded;
+    private bool grounded;
     private bool flipped;
     private bool dead;
+    public int lives = 0;
 
-    private float jumpSpeed = 8;
+    private float jumpSpeed = 7;
     private float fallSpeed = 6;
     private float gravity = 11;
 
-    //private CharacterController controller;
     private Rigidbody2D character;
     private SpriteRenderer sprite;
     private Animator animator;
-    private RaycastHit2D hit;  //shoots up
-    private RaycastHit2D hit2; //shoots down
+    private RaycastHit2D hitRight; //shoots right
+    private RaycastHit2D hitUp;    //shoots up
+    private RaycastHit2D hitDown;  //shoots down
 
     void Start()
     {
-        //controller = GetComponent<CharacterController>();
         character = GetComponent<Rigidbody2D>();
         sprite = GetComponent<SpriteRenderer>();
         grounded = false;
@@ -34,6 +34,7 @@ public class PlayerController : MonoBehaviour
     {
         jump();
         flip();
+        checkforQuit();
     }
 
     void FixedUpdate()
@@ -45,7 +46,7 @@ public class PlayerController : MonoBehaviour
         }
         isGrounded();
         fall();
-        checkForDeath();     
+        checkForCollision();
     }
 
     void jump()
@@ -128,41 +129,98 @@ public class PlayerController : MonoBehaviour
 		}
     }
 
-    void checkForDeath()
+    void checkForCollision()
     {
-        Vector2 top = new Vector2(transform.position.x, transform.position.y + transform.lossyScale.y); //check collision with top of character
-        dead = Physics2D.Raycast(top, transform.right, transform.lossyScale.x);
-        Vector2 bottom = new Vector2(transform.position.x, transform.position.y - transform.lossyScale.y); //check collision with bottom of character
-        dead = Physics2D.Raycast(bottom, transform.right, transform.lossyScale.x);
+        Vector2 top = new Vector2(transform.position.x, transform.position.y); //check collision with top of character
+        hitRight = Physics2D.Raycast(top, transform.right, transform.lossyScale.x);
+        //Vector2 bottom = new Vector2(transform.position.x, transform.position.y - transform.lossyScale.y); //check collision with bottom of character
+        //dead = Physics2D.Raycast(bottom, transform.right, transform.lossyScale.x);
 
-        hit = Physics2D.Raycast(transform.position, transform.up, 0.5f);
-        hit2 = Physics2D.Raycast(transform.position, -transform.up, 0.5f);
-        if (hit && hit.collider.gameObject.CompareTag("Rocket"))
+        hitUp = Physics2D.Raycast(transform.position, transform.up, 0.5f);
+        hitDown = Physics2D.Raycast(transform.position, -transform.up, 0.5f);
+
+        //Rockets
+        if (hitRight && hitRight.collider.gameObject.CompareTag("Rocket"))
         {
-            print("Hit2");
-            dead = true;
+            //hitUp.transform.gameObject.GetComponent<AudioSource>().Play();
+            if (lives == 0) { dead = true; }
+            else lives--;
         }
-        else if (hit2 && hit2.collider.gameObject.CompareTag("Rocket"))
+        else if (hitUp && hitUp.collider.gameObject.CompareTag("Rocket"))
         {
-            print("Hit2");
-            dead = true;
+            //hitUp.transform.gameObject.GetComponent<AudioSource>().Play();
+            if (lives == 0) { dead = true; }
+            else lives--;
         }
-        else if (hit2 && hit2.collider.gameObject.CompareTag("Spikes"))
+        else if (hitDown && hitDown.collider.gameObject.CompareTag("Rocket"))
         {
-            print("Hit2");
+            //hitUp.transform.gameObject.GetComponent<AudioSource>().Play();
+            if (lives == 0) { dead = true; }
+            else lives--;
+        }
+
+        //Spikes
+        else if (hitRight && hitRight.collider.gameObject.CompareTag("Spikes"))
+        {
+            if (lives == 0) { dead = true; }
+            else lives--;
+        }
+        else if (hitUp && hitUp.collider.gameObject.CompareTag("Spikes"))
+        {
+            if (lives == 0) { dead = true; }
+            else lives--;
+        }
+        else if (hitDown && hitDown.collider.gameObject.CompareTag("Spikes"))
+        {
+            if (lives == 0) { dead = true; }
+            else lives--;
+        }
+
+        //Life Powerup
+        else if (hitRight && hitRight.collider.gameObject.CompareTag("Life"))
+        {
+            lives++;
+            Destroy(hitRight.transform.gameObject);
+        }
+        else if (hitUp && hitUp.collider.gameObject.CompareTag("Life"))
+        {
+            lives++;
+            Destroy(hitUp.transform.gameObject);
+        }
+        else if (hitDown && hitDown.collider.gameObject.CompareTag("Life"))
+        {
+            lives++;
+            Destroy(hitDown.transform.gameObject);
+        }
+        else if (hitRight)
+        {
             dead = true;
         }
     }
 
     void onTriggerEnter2D(Collider2D other)
     {
-        print("Hit1");
+        print("hitUp");
         if (other.gameObject.CompareTag("Rocket")) {
-            dead = true;
+            if (lives == 0) { dead = true; }
+            else lives--;
         }
         else if (other.gameObject.CompareTag("Spikes"))
         {
-            dead = true;
+            if (lives == 0) { dead = true; }
+            else lives--;
+        }
+        else if (other.gameObject.CompareTag("Life"))
+        {
+            lives++;
+        }
+    }
+    
+    void checkforQuit() {
+        if (Input.GetButtonDown("Cancel"))
+        {
+            SceneManager.LoadScene("Menu");
+            GameObject.Find("Settings").GetComponent<FlipMenu>().startMusic();
         }
     }
 }

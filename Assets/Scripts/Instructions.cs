@@ -7,7 +7,7 @@ using System.Collections;
 /// </summary>
 public class Instructions : MonoBehaviour
 {
-	public void StartGame()
+	public void goToMenu()
 	{
 		// "Instructions" is the scene intended.
 		SceneManager.LoadScene("Instructions");

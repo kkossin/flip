@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class LevelController : MonoBehaviour {
-    private float speed;
+    public float speed;
     private float maxSpeed;
     private float frequency;
     private bool generate;
@@ -32,10 +32,16 @@ public class LevelController : MonoBehaviour {
     public GameObject level13;
     public GameObject level14;
     public GameObject level15;
+    public GameObject life;
+    public GameObject shield;
+    public GameObject slowTime;
 
     void Start()
     {
-        //Easy
+        if (GameObject.Find("Settings").GetComponent<FlipMenu>())
+        {
+            difficulty = GameObject.Find("Settings").GetComponent<FlipMenu>().difficulty;
+        }
         switch (difficulty)
         {
             case 0:
@@ -45,32 +51,36 @@ public class LevelController : MonoBehaviour {
                 break;
             case 1: //Easy
                 speed = 0.03f;
-                maxSpeed = 0.05f;
+                maxSpeed = 0.06f;
                 frequency = 1;
                 break;
             case 2: //Medium
                 speed = 0.04f;
-                maxSpeed = 0.07f;
+                maxSpeed = 0.08f;
                 frequency = 2;
                 break;
             case 3: //Hard
                 speed = 0.05f;
-                maxSpeed = 0.09f;
+                maxSpeed = 0.10f;
                 frequency = 3;
                 break;
         }
 
-        generate = false;  //we'll set this as true each time we want a new segment
-        alternate = 1; //we alternate between empty and non-empty segments
+        generate = true;
 
-        //we start the game with five empty segments
-        activeChunks.Enqueue((GameObject)Instantiate(levelPlain, new Vector2(-7.5f, 0.0f), Quaternion.identity));
-        activeChunks.Enqueue((GameObject)Instantiate(levelPlain, new Vector2(-2.5f, 0.0f), Quaternion.identity));
-        activeChunks.Enqueue((GameObject)Instantiate(levelPlain, new Vector2(2.5f, 0.0f), Quaternion.identity));
-        activeChunks.Enqueue((GameObject)Instantiate(levelPlain, new Vector2(7.5f, 0.0f), Quaternion.identity));
-        activeChunks.Enqueue((GameObject)Instantiate(levelPlain, new Vector2(12.5f, 0.0f), Quaternion.identity));
+        if (generate)
+        {
+            //we start the game with five empty segments
+            activeChunks.Enqueue((GameObject)Instantiate(levelPlain, new Vector2(-7.5f, 0.0f), Quaternion.identity));
+            activeChunks.Enqueue((GameObject)Instantiate(levelPlain, new Vector2(-2.5f, 0.0f), Quaternion.identity));
+            activeChunks.Enqueue((GameObject)Instantiate(levelPlain, new Vector2(2.5f, 0.0f), Quaternion.identity));
+            activeChunks.Enqueue((GameObject)Instantiate(levelPlain, new Vector2(7.5f, 0.0f), Quaternion.identity));
+            activeChunks.Enqueue((GameObject)Instantiate(levelPlain, new Vector2(12.5f, 0.0f), Quaternion.identity));
+        }
+
+        generate = false;  //we'll set this as true each time we want a new segment
     }
-	
+
 	void FixedUpdate ()
     {
         if (speed < maxSpeed)
@@ -94,7 +104,9 @@ public class LevelController : MonoBehaviour {
             timeDisplay.text = "Score: " + seconds.ToString();
 
             int type = 0;
+            int spawn = 0;
             if (alternate > 0) { type = Random.Range(1, 16); }  //Generate a random number between 0 and 15 to decide which segment comes next
+            spawn = Random.Range(1, 37); //roughly 1 out of 12 sections will generate a powerup
             alternate += 1;
             if (alternate > frequency) { alternate = 0; }
 
@@ -133,7 +145,46 @@ public class LevelController : MonoBehaviour {
                 case 15: { activeChunks.Enqueue((GameObject)Instantiate(level15, new Vector2(12.5f, 0.0f), Quaternion.identity));
                           break; }
             }
+
+            switch (spawn)
+            {
+                case 6:
+                    {
+                        Instantiate(life, new Vector2(12.5f, 0.0f), Quaternion.identity);
+                        break;
+                    }
+                case 2:
+                    {
+                        Instantiate(life, new Vector2(12.5f, 0.0f), Quaternion.identity);
+                        break;
+                    }
+                case 3:
+                    {
+                        Instantiate(life, new Vector2(12.5f, 0.0f), Quaternion.identity);
+                        break;
+                    }
+            }
             generate = false; //only one segment per segment that is destroyed
         }
+    }
+
+    void setTest()
+    {
+        difficulty = 0;
+    }
+
+    void setEasy()
+    {
+        difficulty = 1;
+    }
+
+    void setMedium()
+    {
+        difficulty = 2;
+    }
+
+    void setHard()
+    {
+        difficulty = 3;
     }
 }
