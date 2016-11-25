@@ -41,7 +41,10 @@ public class PlayerController : MonoBehaviour
     {
         if (dead)
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            //Update 11/18/16: No longer need the next line in order to make the death menu appear.
+            //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);//
+            //Next line makes character disappear, as if dead.
+            Destroy(gameObject);
             dead = false;
         }
         isGrounded();
@@ -223,4 +226,12 @@ public class PlayerController : MonoBehaviour
             GameObject.Find("Settings").GetComponent<FlipMenu>().startMusic();
         }
     }
+
+    void OnDestroy()
+    {
+        // Game Over.
+        var gameOver = FindObjectOfType<Deathmenu>();
+        gameOver.ShowButtons();
+    }
+
 }
