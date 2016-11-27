@@ -160,9 +160,12 @@ public class LevelController : MonoBehaviour {
                           break; }
             }
 
+
+            Instantiate(life, new Vector2(12.5f, 0.0f), Quaternion.identity);
+
             switch (spawn)
             {
-                case 6:
+                case 1:
                     {
                         Instantiate(life, new Vector2(12.5f, 0.0f), Quaternion.identity);
                         break;
@@ -178,7 +181,7 @@ public class LevelController : MonoBehaviour {
                         break;
                     }
             }
-            generate = false; //only one segment per segment that is destroyed
+            generate = false; //only one segment built per segment that is destroyed
         }
     }
 
