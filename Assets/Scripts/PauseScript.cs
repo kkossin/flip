@@ -8,6 +8,7 @@ public class PauseScript : MonoBehaviour
 
     void Update()
     {
+        var Paused = FindObjectOfType<PauseMenu>();
 
         if (Pause == false)
         {
@@ -22,14 +23,17 @@ public class PauseScript : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.P))
         {
+
             if (Pause == true)
             {
                 Pause = false;
+                Paused.HideButtons();
             }
 
             else
             {
                 Pause = true;
+                Paused.ShowButtons();
             }
         }
 
