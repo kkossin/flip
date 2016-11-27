@@ -3,12 +3,12 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 /// <summary>
-/// Start or quit the game
+/// Pause or unpause the game
 /// </summary>
-public class Deathmenu : MonoBehaviour
+public class PauseMenu : MonoBehaviour
 {
     private Button[] buttons;
-   // private Image[] images;
+    // private Image[] images;
 
     void Awake()
     {
@@ -20,7 +20,7 @@ public class Deathmenu : MonoBehaviour
 
         // Disable them
         HideButtons();
-       // HideImages();
+        // HideImages();
     }
 
     public void HideButtons()
@@ -41,21 +41,21 @@ public class Deathmenu : MonoBehaviour
 
     //Doesn't work as of now.
 
-   /* public void HideImages()
-    {
-        foreach (var b in images)
-        {
-            b.gameObject.SetActive(false);
-        }
-    }
+    /* public void HideImages()
+     {
+         foreach (var b in images)
+         {
+             b.gameObject.SetActive(false);
+         }
+     }
 
-    public void ShowImages()
-    {
-        foreach (var b in images)
-        {
-            b.gameObject.SetActive(true);
-        }
-    } */
+     public void ShowImages()
+     {
+         foreach (var b in images)
+         {
+             b.gameObject.SetActive(true);
+         }
+     } */
 
     public void ExitToMenu()
     {
@@ -67,5 +67,10 @@ public class Deathmenu : MonoBehaviour
     {
         // Reload the level
         SceneManager.LoadScene("FeatureComplete");
+    }
+
+    public void UnPause()
+    {
+        Time.timeScale = 1;
     }
 }
