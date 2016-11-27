@@ -53,4 +53,9 @@ public class FlipMenu : MonoBehaviour
     {
         SceneManager.LoadScene("Instructions");
     }
+
+    public void goToScores()
+    {
+        SceneManager.LoadScene("Scores");
+    }
 }
