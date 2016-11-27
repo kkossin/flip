@@ -30,7 +30,7 @@ public class FlipMenu : MonoBehaviour
         // "Prototype" is the name of the first scene we created.       
         difficulty = 1;
         GetComponent<AudioSource>().Stop();
-        SceneManager.LoadScene("FeatureComplete");  
+        SceneManager.LoadScene("Alpha");  
     }
 
     void startGameMedium()
@@ -38,7 +38,7 @@ public class FlipMenu : MonoBehaviour
         // "Prototype" is the name of the first scene we created.
         difficulty = 2;
         GetComponent<AudioSource>().Stop();
-        SceneManager.LoadScene("FeatureComplete");
+        SceneManager.LoadScene("Alpha");
     }
 
     void startGameHard()
@@ -46,7 +46,7 @@ public class FlipMenu : MonoBehaviour
         // "Prototype" is the name of the first scene we created.
         difficulty = 3;
         GetComponent<AudioSource>().Stop();
-        SceneManager.LoadScene("FeatureComplete");
+        SceneManager.LoadScene("Alpha");
     }
 
     void goToInstructions ()

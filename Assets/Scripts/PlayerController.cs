@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour
     private bool grounded;
     private bool flipped;
     private bool dead;
+    public bool stopped;
     public int lives = 0;
 
     private float jumpSpeed = 7;
@@ -19,6 +20,8 @@ public class PlayerController : MonoBehaviour
     private RaycastHit2D hitRight; //shoots right
     private RaycastHit2D hitUp;    //shoots up
     private RaycastHit2D hitDown;  //shoots down
+    AudioSource switchTrack;
+    AudioSource deathTrack;
 
     void Start()
     {
@@ -27,7 +30,11 @@ public class PlayerController : MonoBehaviour
         grounded = false;
         flipped = false;
         dead = false;
+        stopped = false;
 		animator = GetComponent<Animator>();
+        var audioSources = GetComponents<AudioSource>();
+        switchTrack = audioSources[0];
+        deathTrack = audioSources[1];
     }
 
     void Update()
@@ -42,10 +49,8 @@ public class PlayerController : MonoBehaviour
         if (dead)
         {
             //Update 11/18/16: No longer need the next line in order to make the death menu appear.
-            //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);//
-            //Next line makes character disappear, as if dead.
-            Destroy(gameObject);
-            dead = false;
+            //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);//            
+            stopGame();
         }
         isGrounded();
         fall();
@@ -113,6 +118,7 @@ public class PlayerController : MonoBehaviour
         {
             flipped = !flipped;
             sprite.flipY = !sprite.flipY;
+            switchTrack.Play();
         }
     }
 
@@ -128,7 +134,7 @@ public class PlayerController : MonoBehaviour
         }
 		if (grounded)
 		{
-			animator.SetTrigger ("run");
+			animator.SetTrigger("run");
 		}
     }
 
@@ -227,12 +233,17 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void OnDestroy()
+    void stopGame()
     {
-        // Game Over.
+        if (!stopped) { deathTrack.Play(); }
+        stopped = true;
         animator.SetTrigger("death");
+        if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 1 && !animator.IsInTransition(0) 
+                 && animator.GetCurrentAnimatorStateInfo(0).IsName("death Animation"))
+        {
+            GetComponent<SpriteRenderer>().enabled = false;
+        }
         var gameOver = FindObjectOfType<Deathmenu>();
         gameOver.ShowButtons();
     }
-
 }

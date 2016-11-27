@@ -12,7 +12,6 @@ public class LevelController : MonoBehaviour {
     private Queue<GameObject> activeChunks = new Queue<GameObject>();
 
     private float seconds = 0;
-    private int minutes = 0;
     public int difficulty;
     public Text timeDisplay;
 
@@ -103,10 +102,12 @@ public class LevelController : MonoBehaviour {
         {
             GameObject deadChunk = activeChunks.Dequeue();
             Destroy(deadChunk);
-            seconds += Time.timeScale;
-            //if (seconds >= 60) { seconds = 0; minutes = minutes + 1; }
-            //timeDisplay.text = "Score: " + minutes.ToString() + ":" + seconds.ToString();
-            timeDisplay.text = "Score: " + seconds.ToString();
+            if (!GameObject.Find("Character").GetComponent<PlayerController>().stopped)
+            {
+                seconds += Time.timeScale;
+            }
+            //if (seconds >= 60) { seconds = 0; minutes = minutes + 1; }      
+            timeDisplay.text = "Score: " + seconds.ToString() + "00";
        
             int type = 0;
             int spawn = 0;
