@@ -6,7 +6,7 @@ using System.Collections.Generic;
 public class LevelController : MonoBehaviour {
     public float speed;
     private float maxSpeed;
-    private float frequency;
+    private int frequency;
     private bool generate;
     private int alternate;
     private Queue<GameObject> activeChunks = new Queue<GameObject>();
@@ -32,13 +32,17 @@ public class LevelController : MonoBehaviour {
     public GameObject level13;
     public GameObject level14;
     public GameObject level15;
+    public GameObject level16;
+    public GameObject level17;
+    public GameObject level18;
+    public GameObject level19;
     public GameObject life;
     public GameObject shield;
     public GameObject slowTime;
 
     void Start()
     {
-        if (GameObject.Find("Settings").GetComponent<FlipMenu>())
+        if (GameObject.Find("Settings") != null)
         {
             difficulty = GameObject.Find("Settings").GetComponent<FlipMenu>().difficulty;
         }
@@ -50,18 +54,18 @@ public class LevelController : MonoBehaviour {
                 frequency = 0;
                 break;
             case 1: //Easy
-                speed = 0.03f;
-                maxSpeed = 0.06f;
+                speed = 0.05f;
+                maxSpeed = 0.10f;
                 frequency = 1;
                 break;
             case 2: //Medium
-                speed = 0.04f;
-                maxSpeed = 0.08f;
+                speed = 0.06f;
+                maxSpeed = 0.12f;
                 frequency = 2;
                 break;
             case 3: //Hard
-                speed = 0.05f;
-                maxSpeed = 0.10f;
+                speed = 0.07f;
+                maxSpeed = 0.14f;
                 frequency = 3;
                 break;
         }
@@ -79,13 +83,14 @@ public class LevelController : MonoBehaviour {
         }
 
         generate = false;  //we'll set this as true each time we want a new segment
+        int alternate = (int)frequency;
     }
 
 	void FixedUpdate ()
     {
         if (speed < maxSpeed)
         {
-            speed = speed * 1.0001f;
+            speed = speed * 1.0005f;
         }
 
 	    foreach (GameObject chunk in activeChunks)
@@ -99,13 +104,13 @@ public class LevelController : MonoBehaviour {
             GameObject deadChunk = activeChunks.Dequeue();
             Destroy(deadChunk);
             seconds += Time.timeScale;
-            if (seconds >= 60) { seconds = 0; minutes = minutes + 1; }
+            //if (seconds >= 60) { seconds = 0; minutes = minutes + 1; }
             //timeDisplay.text = "Score: " + minutes.ToString() + ":" + seconds.ToString();
             timeDisplay.text = "Score: " + seconds.ToString();
-
+       
             int type = 0;
             int spawn = 0;
-            if (alternate > 0) { type = Random.Range(1, 16); }  //Generate a random number between 0 and 15 to decide which segment comes next
+            if (alternate > 0) { type = Random.Range(1, 20); }  //Generate a random number between 0 and 15 to decide which segment comes next
             spawn = Random.Range(1, 37); //roughly 1 out of 12 sections will generate a powerup
             alternate += 1;
             if (alternate > frequency) { alternate = 0; }
@@ -144,6 +149,14 @@ public class LevelController : MonoBehaviour {
                           break; }
                 case 15: { activeChunks.Enqueue((GameObject)Instantiate(level15, new Vector2(12.5f, 0.0f), Quaternion.identity));
                           break; }
+                case 16: { activeChunks.Enqueue((GameObject)Instantiate(level16, new Vector2(12.5f, 0.0f), Quaternion.identity));
+                          break; }
+                case 17: { activeChunks.Enqueue((GameObject)Instantiate(level17, new Vector2(12.5f, 0.0f), Quaternion.identity));
+                          break; }
+                case 18: { activeChunks.Enqueue((GameObject)Instantiate(level18, new Vector2(12.5f, 0.0f), Quaternion.identity));
+                          break; }
+                case 19: { activeChunks.Enqueue((GameObject)Instantiate(level19, new Vector2(12.5f, 0.0f), Quaternion.identity));
+                          break; }
             }
 
             switch (spawn)
@@ -155,12 +168,12 @@ public class LevelController : MonoBehaviour {
                     }
                 case 2:
                     {
-                        Instantiate(life, new Vector2(12.5f, 0.0f), Quaternion.identity);
+                        Instantiate(shield, new Vector2(12.5f, 0.0f), Quaternion.identity);
                         break;
                     }
                 case 3:
                     {
-                        Instantiate(life, new Vector2(12.5f, 0.0f), Quaternion.identity);
+                        Instantiate(slowTime, new Vector2(12.5f, 0.0f), Quaternion.identity);
                         break;
                     }
             }
