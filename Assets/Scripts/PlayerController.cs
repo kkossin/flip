@@ -230,6 +230,7 @@ public class PlayerController : MonoBehaviour
     void OnDestroy()
     {
         // Game Over.
+        animator.SetTrigger("death");
         var gameOver = FindObjectOfType<Deathmenu>();
         gameOver.ShowButtons();
     }
