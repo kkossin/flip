@@ -66,7 +66,7 @@ public class PauseMenu : MonoBehaviour
     public void RestartGame()
     {
         // Reload the level
-        SceneManager.LoadScene("FeatureComplete");
+        SceneManager.LoadScene("Alpha");
     }
 
     public void UnPause()

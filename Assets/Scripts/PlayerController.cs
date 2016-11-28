@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
     private bool dead;
     private bool shielded;
     private bool slowed;
+    private bool recorded;
     public bool stopped;
     public int lives = 0;
     public int timer = 0;
@@ -37,6 +38,7 @@ public class PlayerController : MonoBehaviour
         dead = false;
         shielded = false;
         slowed = false;
+        recorded = false;
         stopped = false;
 		animator = GetComponent<Animator>();
         var audioSources = GetComponents<AudioSource>();
@@ -59,6 +61,12 @@ public class PlayerController : MonoBehaviour
             //Update 11/18/16: No longer need the next line in order to make the death menu appear.
             //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);//            
             stopGame();
+            if (!recorded)
+            {
+                int score = GameObject.Find("Level Manager").GetComponent<LevelController>().score;
+                GameObject.Find("Settings").GetComponent<FlipMenu>().addScore(score);
+                recorded = true;
+            }
         }
         isGrounded();
         fall();
@@ -150,11 +158,7 @@ public class PlayerController : MonoBehaviour
 
     void checkForCollision()
     {
-        Vector2 top = new Vector2(transform.position.x, transform.position.y); //check collision with top of character
-        hitRight = Physics2D.Raycast(top, transform.right, transform.lossyScale.x);
-        //Vector2 bottom = new Vector2(transform.position.x, transform.position.y - transform.lossyScale.y); //check collision with bottom of character
-        //dead = Physics2D.Raycast(bottom, transform.right, transform.lossyScale.x);
-
+        hitRight = Physics2D.Raycast(transform.position, transform.right, transform.lossyScale.x);
         hitUp = Physics2D.Raycast(transform.position, transform.up, 0.5f);
         hitDown = Physics2D.Raycast(transform.position, -transform.up, 0.5f);
 
@@ -256,24 +260,24 @@ public class PlayerController : MonoBehaviour
         //slowTime Powerup
         else if (hitRight && hitRight.collider.gameObject.CompareTag("Slow Time"))
         {
-            slowed = true;
+            if (!slowed) slowed = true;
             timer = 300;
             Destroy(hitRight.transform.gameObject);
         }
         else if (hitUp && hitUp.collider.gameObject.CompareTag("Slow Time"))
         {
-            slowed = true;
+            if (!slowed) slowed = true;
             timer = 300;
             Destroy(hitUp.transform.gameObject);
         }
         else if (hitDown && hitDown.collider.gameObject.CompareTag("Slow Time"))
         {
-            slowed = true;
+            if (!slowed) slowed = true;
             timer = 300;
             Destroy(hitDown.transform.gameObject);
         }
 
-        else if (hitRight)
+        else if (hitRight && !dead)
         {
             if (lives == 0 && !shielded) { dead = true; }
             else
@@ -304,9 +308,9 @@ public class PlayerController : MonoBehaviour
     
     void applyShield()
     {
-        if (timer % 30 == 0)
+        if (timer % 15 == 0)
         {
-            if (timer % 60 == 0)
+            if (timer % 30 == 0)
             {
                 sprite.color = Color.green;
             }

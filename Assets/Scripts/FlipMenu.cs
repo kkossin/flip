@@ -8,11 +8,13 @@ using System.Collections;
 public class FlipMenu : MonoBehaviour
 {
     private Scene game;
-    public int difficulty = 2;
+    public int difficulty;
+    private ArrayList scores;
 
     void Start()
     {
         GetComponent<AudioSource>().Play();
+        scores = new ArrayList();
     }
 
     void Awake()
@@ -31,8 +33,7 @@ public class FlipMenu : MonoBehaviour
     }
 
 	void startGameEasy()
-	{
-        // "Prototype" is the name of the first scene we created.       
+	{      
         difficulty = 1;
         GetComponent<AudioSource>().Stop();
         SceneManager.LoadScene("Alpha");  
@@ -40,7 +41,6 @@ public class FlipMenu : MonoBehaviour
 
     void startGameMedium()
     {
-        // "Prototype" is the name of the first scene we created.
         difficulty = 2;
         GetComponent<AudioSource>().Stop();
         SceneManager.LoadScene("Alpha");
@@ -48,7 +48,6 @@ public class FlipMenu : MonoBehaviour
 
     void startGameHard()
     {
-        // "Prototype" is the name of the first scene we created.
         difficulty = 3;
         GetComponent<AudioSource>().Stop();
         SceneManager.LoadScene("Alpha");
@@ -62,5 +61,17 @@ public class FlipMenu : MonoBehaviour
     public void goToScores()
     {
         SceneManager.LoadScene("Scores");
+    }
+
+    public void addScore(int score)
+    {
+        scores.Add(score);
+        scores.Sort();
+    }
+
+    public int getScore(int position)
+    {
+        if (scores.Count >= position + 1) return (int)scores[position];
+        else return 0;
     }
 }

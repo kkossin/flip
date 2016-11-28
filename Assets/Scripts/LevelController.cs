@@ -11,9 +11,10 @@ public class LevelController : MonoBehaviour {
     private int alternate;
     private Queue<GameObject> activeChunks = new Queue<GameObject>();
 
-    private float seconds = 0;
+    public int score = 0;
     public int difficulty;
     public Text timeDisplay;
+    public Text livesDisplay;
 
     public GameObject levelPlain; //must be a better way to do this...
     public GameObject level1;
@@ -42,6 +43,9 @@ public class LevelController : MonoBehaviour {
     void Start()
     {
         GetComponent<AudioSource>().Play();
+        timeDisplay = GameObject.Find("Score").GetComponent<Text>();
+        livesDisplay = GameObject.Find("Lives").GetComponent<Text>();
+        generate = false;
 
         if (GameObject.Find("Settings") != null)
         {
@@ -71,19 +75,13 @@ public class LevelController : MonoBehaviour {
                 break;
         }
 
-        generate = true;
+        //we start the game with five empty segments
+        activeChunks.Enqueue((GameObject)Instantiate(levelPlain, new Vector2(-7.5f, 0.0f), Quaternion.identity));
+        activeChunks.Enqueue((GameObject)Instantiate(levelPlain, new Vector2(-2.5f, 0.0f), Quaternion.identity));
+        activeChunks.Enqueue((GameObject)Instantiate(levelPlain, new Vector2(2.5f, 0.0f), Quaternion.identity));
+        activeChunks.Enqueue((GameObject)Instantiate(levelPlain, new Vector2(7.5f, 0.0f), Quaternion.identity));
+        activeChunks.Enqueue((GameObject)Instantiate(levelPlain, new Vector2(12.5f, 0.0f), Quaternion.identity));      
 
-        if (generate)
-        {
-            //we start the game with five empty segments
-            activeChunks.Enqueue((GameObject)Instantiate(levelPlain, new Vector2(-7.5f, 0.0f), Quaternion.identity));
-            activeChunks.Enqueue((GameObject)Instantiate(levelPlain, new Vector2(-2.5f, 0.0f), Quaternion.identity));
-            activeChunks.Enqueue((GameObject)Instantiate(levelPlain, new Vector2(2.5f, 0.0f), Quaternion.identity));
-            activeChunks.Enqueue((GameObject)Instantiate(levelPlain, new Vector2(7.5f, 0.0f), Quaternion.identity));
-            activeChunks.Enqueue((GameObject)Instantiate(levelPlain, new Vector2(12.5f, 0.0f), Quaternion.identity));
-        }
-
-        generate = false;  //we'll set this as true each time we want a new segment
         int alternate = (int)frequency;
     }
 
@@ -100,17 +98,18 @@ public class LevelController : MonoBehaviour {
             if (chunk.transform.position.x < -12.5f) { generate = true; } //this bool will maintain the spacing we want
         }
 
+        if (!GameObject.Find("Character").GetComponent<PlayerController>().stopped)
+        {
+            score += (int)Time.timeScale;
+        }
+      
+        timeDisplay.text = "Score - " + score.ToString() + "00";
+        livesDisplay.text = "Lives - " + GameObject.Find("Character").GetComponent<PlayerController>().lives;
+
         if (generate)
         {
             GameObject deadChunk = activeChunks.Dequeue();
-            Destroy(deadChunk);
-            if (!GameObject.Find("Character").GetComponent<PlayerController>().stopped)
-            {
-                seconds += Time.timeScale;
-            }
-            //if (seconds >= 60) { seconds = 0; minutes = minutes + 1; }      
-            timeDisplay.text = "Score: " + seconds.ToString() + "00";
-       
+            Destroy(deadChunk);                 
             int type = 0;
             int spawn = 0;
             if (alternate > 0) { type = Random.Range(1, 20); }  //Generate a random number between 0 and 15 to decide which segment comes next
@@ -163,7 +162,7 @@ public class LevelController : MonoBehaviour {
             }
 
 
-            Instantiate(life, new Vector2(12.5f, 0.0f), Quaternion.identity);
+            Instantiate(slowTime, new Vector2(12.5f, 0.0f), Quaternion.identity);
 
             switch (spawn)
             {
