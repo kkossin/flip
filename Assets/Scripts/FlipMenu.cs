@@ -10,14 +10,9 @@ public class FlipMenu : MonoBehaviour
     private Scene game;
     public int difficulty = 2;
 
-    public void startMusic()
+    void Start()
     {
         GetComponent<AudioSource>().Play();
-    }
-
-    public void stopMusic()
-    {
-        GetComponent<AudioSource>().Stop();
     }
 
     void Awake()

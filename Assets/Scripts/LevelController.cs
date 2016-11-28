@@ -41,6 +41,8 @@ public class LevelController : MonoBehaviour {
 
     void Start()
     {
+        GetComponent<AudioSource>().Play();
+
         if (GameObject.Find("Settings") != null)
         {
             difficulty = GameObject.Find("Settings").GetComponent<FlipMenu>().difficulty;
