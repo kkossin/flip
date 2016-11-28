@@ -20,6 +20,16 @@ public class FlipMenu : MonoBehaviour
         DontDestroyOnLoad(this);
     }
 
+    public void startMusic()
+    {
+        GetComponent<AudioSource>().Play();
+    }
+
+    public void stopMusic()
+    {
+        GetComponent<AudioSource>().Stop();
+    }
+
 	void startGameEasy()
 	{
         // "Prototype" is the name of the first scene we created.       

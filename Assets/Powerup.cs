@@ -24,11 +24,11 @@ public class Powerup : MonoBehaviour {
             this.transform.position = new Vector2(this.transform.position.x - speedHoriz, this.transform.position.y + speedVerti);
         }
 
-        if (speedVerti < 0.0f && this.transform.position.y < -2.5f)
+        if (speedVerti < 0.0f && this.transform.position.y < -2.3f)
         {
             speedVerti = -speedVerti;
         }
-        if (speedVerti > 0.0f && this.transform.position.y > 2.5f)
+        if (speedVerti > 0.0f && this.transform.position.y > 2.3f)
         {
             speedVerti = -speedVerti;
         }

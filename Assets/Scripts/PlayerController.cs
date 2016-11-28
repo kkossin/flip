@@ -7,12 +7,17 @@ public class PlayerController : MonoBehaviour
     private bool grounded;
     private bool flipped;
     private bool dead;
+    private bool shielded;
+    private bool slowed;
     public bool stopped;
     public int lives = 0;
+    public int timer = 0;
 
     private float jumpSpeed = 7;
     private float fallSpeed = 6;
     private float gravity = 11;
+    private float gameSpeed;
+    Color originalColor;
 
     private Rigidbody2D character;
     private SpriteRenderer sprite;
@@ -30,11 +35,14 @@ public class PlayerController : MonoBehaviour
         grounded = false;
         flipped = false;
         dead = false;
+        shielded = false;
+        slowed = false;
         stopped = false;
 		animator = GetComponent<Animator>();
         var audioSources = GetComponents<AudioSource>();
         switchTrack = audioSources[0];
         deathTrack = audioSources[1];
+        originalColor = sprite.color;
     }
 
     void Update()
@@ -55,6 +63,8 @@ public class PlayerController : MonoBehaviour
         isGrounded();
         fall();
         checkForCollision();
+        if (shielded) applyShield();
+        if (slowed) slowGame();
     }
 
     void jump()
@@ -151,38 +161,59 @@ public class PlayerController : MonoBehaviour
         //Rockets
         if (hitRight && hitRight.collider.gameObject.CompareTag("Rocket"))
         {
-            //hitUp.transform.gameObject.GetComponent<AudioSource>().Play();
-            if (lives == 0) { dead = true; }
-            else lives--;
+            if (lives == 0 && !shielded) { dead = true; }
+            else
+            {
+                Destroy(hitRight.transform.gameObject);
+                if (!shielded) lives--;
+            }
         }
         else if (hitUp && hitUp.collider.gameObject.CompareTag("Rocket"))
         {
-            //hitUp.transform.gameObject.GetComponent<AudioSource>().Play();
-            if (lives == 0) { dead = true; }
-            else lives--;
+            if (lives == 0 && !shielded) { dead = true; }
+            else
+            {
+                Destroy(hitUp.transform.gameObject);
+                if (!shielded) lives--;
+            }
         }
         else if (hitDown && hitDown.collider.gameObject.CompareTag("Rocket"))
         {
-            //hitUp.transform.gameObject.GetComponent<AudioSource>().Play();
-            if (lives == 0) { dead = true; }
-            else lives--;
+            if (lives == 0 && !shielded) { dead = true; }
+            else
+            {
+                Destroy(hitDown.transform.gameObject);
+                if (!shielded) lives--;
+            }
         }
 
         //Spikes
         else if (hitRight && hitRight.collider.gameObject.CompareTag("Spikes"))
         {
-            if (lives == 0) { dead = true; }
-            else lives--;
+            if (lives == 0 && !shielded) { dead = true; }
+            else
+            {
+                Destroy(hitRight.transform.gameObject);
+                if (!shielded) lives--;
+            }
         }
         else if (hitUp && hitUp.collider.gameObject.CompareTag("Spikes"))
         {
-            if (lives == 0) { dead = true; }
-            else lives--;
+            if (lives == 0 && !shielded) { dead = true; }
+            else
+            {
+                Destroy(hitUp.transform.gameObject);
+                if (!shielded) lives--;
+            }
         }
         else if (hitDown && hitDown.collider.gameObject.CompareTag("Spikes"))
         {
-            if (lives == 0) { dead = true; }
-            else lives--;
+            if (lives == 0 && !shielded) { dead = true; }
+            else
+            {
+                Destroy(hitDown.transform.gameObject);
+                if (!shielded) lives--;
+            }
         }
 
         //Life Powerup
@@ -201,9 +232,55 @@ public class PlayerController : MonoBehaviour
             lives++;
             Destroy(hitDown.transform.gameObject);
         }
+
+        //Shield Powerup
+        else if (hitRight && hitRight.collider.gameObject.CompareTag("Shield"))
+        {
+            shielded = true;
+            timer = 300;
+            Destroy(hitRight.transform.gameObject);
+        }
+        else if (hitUp && hitUp.collider.gameObject.CompareTag("Shield"))
+        {
+            shielded = true;
+            timer = 300;
+            Destroy(hitUp.transform.gameObject);
+        }
+        else if (hitDown && hitDown.collider.gameObject.CompareTag("Shield"))
+        {
+            shielded = true;
+            timer = 300;
+            Destroy(hitDown.transform.gameObject);
+        }
+
+        //slowTime Powerup
+        else if (hitRight && hitRight.collider.gameObject.CompareTag("Slow Time"))
+        {
+            slowed = true;
+            timer = 300;
+            Destroy(hitRight.transform.gameObject);
+        }
+        else if (hitUp && hitUp.collider.gameObject.CompareTag("Slow Time"))
+        {
+            slowed = true;
+            timer = 300;
+            Destroy(hitUp.transform.gameObject);
+        }
+        else if (hitDown && hitDown.collider.gameObject.CompareTag("Slow Time"))
+        {
+            slowed = true;
+            timer = 300;
+            Destroy(hitDown.transform.gameObject);
+        }
+
         else if (hitRight)
         {
-            dead = true;
+            if (lives == 0 && !shielded) { dead = true; }
+            else
+            {
+                Destroy(hitRight.transform.gameObject);
+                if (!shielded) lives--;
+            }
         }
     }
 
@@ -225,6 +302,50 @@ public class PlayerController : MonoBehaviour
         }
     }
     
+    void applyShield()
+    {
+        if (timer % 30 == 0)
+        {
+            if (timer % 60 == 0)
+            {
+                sprite.color = Color.green;
+            }
+            else
+            {
+                sprite.color = originalColor;
+            }
+        }
+        if (timer > 0)
+        {
+            timer--;
+        }
+        else
+        {
+            shielded = false;
+            sprite.color = originalColor;
+            timer = 0;
+        }
+    }
+
+    void slowGame()
+    {
+        if (timer == 300)
+        {
+            gameSpeed = GameObject.Find("Level Manager").GetComponent<LevelController>().speed;
+            GameObject.Find("Level Manager").GetComponent<LevelController>().speed = gameSpeed / 2;
+        }
+        if (timer > 0)
+        {
+            timer--;
+        }
+        else
+        {
+            slowed = false;
+            GameObject.Find("Level Manager").GetComponent<LevelController>().speed = gameSpeed;
+            timer = 0;
+        }
+    }
+
     void checkforQuit() {
         if (Input.GetButtonDown("Cancel"))
         {
