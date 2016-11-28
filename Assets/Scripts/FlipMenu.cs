@@ -7,23 +7,32 @@ using System.Collections;
 /// </summary>
 public class FlipMenu : MonoBehaviour
 {
-    public Scene mainMenu;
     public int difficulty;
-    private ArrayList scores;
+    public ArrayList scores;
 
     void Start()
     {
         if (!GetComponent<AudioSource>().isPlaying)
         {
             GetComponent<AudioSource>().Play();
-        }
-        scores = new ArrayList();
-        mainMenu = SceneManager.GetActiveScene();
+        }       
     }
 
     void Awake()
     {
-        DontDestroyOnLoad(this);
+        scores = new ArrayList();
+        DontDestroyOnLoad(this);     
+        GameObject[] instances = GameObject.FindGameObjectsWithTag("Settings");
+        if (instances.Length > 1)
+        {
+            instances[1] = instances[0];
+            ArrayList transfer = instances[0].GetComponent<FlipMenu>().scores;
+            foreach (int score in transfer)
+            {
+                addScore(score);
+            }
+            Destroy(instances[0]);
+        }  
     }
 
     public void startMusic()
@@ -74,6 +83,7 @@ public class FlipMenu : MonoBehaviour
     {
         scores.Add(score);
         scores.Sort();
+        scores.Reverse();
     }
 
     public int getScore(int position)

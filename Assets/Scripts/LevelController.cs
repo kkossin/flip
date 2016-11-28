@@ -113,7 +113,7 @@ public class LevelController : MonoBehaviour {
             int type = 0;
             int spawn = 0;
             if (alternate > 0) { type = Random.Range(1, 20); }  //Generate a random number between 0 and 15 to decide which segment comes next
-            spawn = Random.Range(1, 37); //roughly 1 out of 12 sections will generate a powerup
+            spawn = Random.Range(1, 25); //roughly 1 out of 12 sections will generate a powerup
             alternate += 1;
             if (alternate > frequency) { alternate = 0; }
 
@@ -160,9 +160,6 @@ public class LevelController : MonoBehaviour {
                 case 19: { activeChunks.Enqueue((GameObject)Instantiate(level19, new Vector2(12.5f, 0.0f), Quaternion.identity));
                           break; }
             }
-
-
-            Instantiate(slowTime, new Vector2(12.5f, 0.0f), Quaternion.identity);
 
             switch (spawn)
             {

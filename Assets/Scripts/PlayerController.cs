@@ -64,7 +64,7 @@ public class PlayerController : MonoBehaviour
             if (!recorded)
             {
                 int score = GameObject.Find("Level Manager").GetComponent<LevelController>().score;
-                if (GameObject.Find("Settings").GetComponent<FlipMenu>())
+                if (GameObject.Find("Settings") != null)
                 {
                     GameObject.Find("Settings").GetComponent<FlipMenu>().addScore(score);
                 }
