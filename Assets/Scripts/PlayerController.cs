@@ -4,7 +4,7 @@ using System.Collections;
 
 public class PlayerController : MonoBehaviour
 {
-    private bool grounded;
+    public bool grounded;
     private bool flipped;
     private bool dead;
     private bool shielded;
@@ -64,7 +64,10 @@ public class PlayerController : MonoBehaviour
             if (!recorded)
             {
                 int score = GameObject.Find("Level Manager").GetComponent<LevelController>().score;
-                GameObject.Find("Settings").GetComponent<FlipMenu>().addScore(score);
+                if (GameObject.Find("Settings").GetComponent<FlipMenu>())
+                {
+                    GameObject.Find("Settings").GetComponent<FlipMenu>().addScore(score);
+                }
                 recorded = true;
             }
         }
@@ -90,20 +93,7 @@ public class PlayerController : MonoBehaviour
     }
 
     void fall()
-    {
-        if (transform.position.y < -2.05f)
-        {
-            fallSpeed = 0;
-            grounded = true;
-            transform.position = new Vector2(transform.position.x, -2.05f);
-        }
-        else if (transform.position.y > 2.02f)
-        {
-            fallSpeed = 0;
-            grounded = true;
-            transform.position = new Vector2(transform.position.x, 2.02f);
-        }
-
+    {       
         if (!flipped)
         {
             if (!grounded)
@@ -142,14 +132,35 @@ public class PlayerController : MonoBehaviour
 
     void isGrounded()
     {
-        if (!flipped)
+        if (!flipped && transform.position.y <= -2.05f)
+        {           
+            grounded = true;
+            animator.SetTrigger("run");
+            if (transform.position.y < -2.05f)
+            {
+                fallSpeed = 0;
+                transform.position = new Vector2(transform.position.x, -2.05f);
+            }
+        }
+        else if (flipped && transform.position.y >= 2.05f)
+        {            
+            grounded = true;
+            animator.SetTrigger("run");
+            if (transform.position.y > 2.05f)
+            {
+                fallSpeed = 0;
+                transform.position = new Vector2(transform.position.x, 2.05f);
+            }
+        }
+        else if (!flipped)
         {
-            grounded = (Physics2D.Raycast(transform.position, -Vector2.up, 0.5f));
+            grounded = Physics2D.Raycast(transform.position, -Vector2.up, 0.5f);
         }
         else
         {
-            grounded = (Physics2D.Raycast(transform.position, Vector2.up, 0.5f));
+            grounded = Physics2D.Raycast(transform.position, -Vector2.down, 0.6f);
         }
+
 		if (grounded)
 		{
 			animator.SetTrigger("run");
@@ -260,20 +271,29 @@ public class PlayerController : MonoBehaviour
         //slowTime Powerup
         else if (hitRight && hitRight.collider.gameObject.CompareTag("Slow Time"))
         {
-            if (!slowed) slowed = true;
-            timer = 300;
+            if (!slowed)
+            {
+                slowed = true;
+                timer = 300;
+            }
             Destroy(hitRight.transform.gameObject);
         }
         else if (hitUp && hitUp.collider.gameObject.CompareTag("Slow Time"))
         {
-            if (!slowed) slowed = true;
-            timer = 300;
+            if (!slowed)
+            {
+                slowed = true;
+                timer = 300;
+            }
             Destroy(hitUp.transform.gameObject);
         }
         else if (hitDown && hitDown.collider.gameObject.CompareTag("Slow Time"))
         {
-            if (!slowed) slowed = true;
-            timer = 300;
+            if (!slowed)
+            {
+                slowed = true;
+                timer = 300;
+            }
             Destroy(hitDown.transform.gameObject);
         }
 

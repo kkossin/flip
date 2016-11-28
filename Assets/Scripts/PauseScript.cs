@@ -3,12 +3,11 @@ using System.Collections;
 
 public class PauseScript : MonoBehaviour
 {
-
     bool Pause = false;
 
     void Update()
     {
-        var Paused = FindObjectOfType<PauseMenu>();
+        var Paused = FindObjectOfType<Deathmenu>();
 
         if (Pause == false)
         {
@@ -20,10 +19,8 @@ public class PauseScript : MonoBehaviour
             Time.timeScale = 0;
         }
 
-
         if (Input.GetKeyDown(KeyCode.P))
         {
-
             if (Pause == true)
             {
                 Pause = false;
@@ -36,9 +33,5 @@ public class PauseScript : MonoBehaviour
                 Paused.ShowButtons();
             }
         }
-
-
     }
-
-
 }
