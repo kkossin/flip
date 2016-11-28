@@ -7,9 +7,11 @@ using UnityEngine.SceneManagement;
 /// </summary>
 public class ReturnToMenu : MonoBehaviour
 {
-	public void StartGame()
+	public void GoToMenu()
 	{
-		// "Menu" is the scene intended.
-		SceneManager.LoadScene("Menu");
+        // "Menu" is the scene intended.
+        SceneManager.UnloadScene("Scores");
+        SceneManager.UnloadScene("Instructions");
+        SceneManager.SetActiveScene(SceneManager.GetSceneByName("Menu"));
 	}
 }

@@ -66,6 +66,6 @@ public class Deathmenu : MonoBehaviour
     public void RestartGame()
     {
         // Reload the level
-        SceneManager.LoadScene("FeatureComplete");
+        SceneManager.LoadScene("Alpha");
     }
 }
