@@ -136,28 +136,28 @@ public class PlayerController : MonoBehaviour
         {           
             grounded = true;
             animator.SetTrigger("run");
-            if (transform.position.y < -2.05f)
-            {
-                fallSpeed = 0;
-                transform.position = new Vector2(transform.position.x, -2.05f);
-            }
         }
         else if (flipped && transform.position.y >= 2.05f)
         {            
             grounded = true;
-            animator.SetTrigger("run");
+            animator.SetTrigger("run");           
+        }
+        else if (!flipped)
+        {
             if (transform.position.y > 2.05f)
             {
                 fallSpeed = 0;
                 transform.position = new Vector2(transform.position.x, 2.05f);
             }
-        }
-        else if (!flipped)
-        {
             grounded = Physics2D.Raycast(transform.position, -Vector2.up, 0.5f);
         }
         else
         {
+            if (transform.position.y < -2.05f)
+            {
+                fallSpeed = 0;
+                transform.position = new Vector2(transform.position.x, -2.05f);
+            }
             grounded = Physics2D.Raycast(transform.position, -Vector2.down, 0.6f);
         }
 
