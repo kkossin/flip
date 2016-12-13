@@ -103,8 +103,8 @@ public class LevelController : MonoBehaviour {
             score += (int)Time.timeScale;
         }
       
-        timeDisplay.text = "Score - " + score.ToString() + "00";
-        livesDisplay.text = "Lives - " + GameObject.Find("Character").GetComponent<PlayerController>().lives;
+        timeDisplay.text = "Score: " + score.ToString() + "00";
+        livesDisplay.text = "Lives: " + GameObject.Find("Character").GetComponent<PlayerController>().lives;
 
         if (generate)
         {
