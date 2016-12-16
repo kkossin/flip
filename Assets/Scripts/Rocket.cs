@@ -16,10 +16,5 @@ public class Rocket : MonoBehaviour {
         {
             this.transform.position = new Vector2(this.transform.position.x - speed, 0);
         }
-
-        if (this.transform.position.x < -12.5)
-        {
-            Destroy(this);
-        }
     }
 }

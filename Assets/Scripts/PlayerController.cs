@@ -23,6 +23,7 @@ public class PlayerController : MonoBehaviour
 
     private Rigidbody2D character;
     private SpriteRenderer sprite;
+    private SpriteRenderer bubble;
     private Animator animator;
     private Text timerDisplay;
     private RaycastHit2D hitRight; //shoots right
@@ -35,6 +36,7 @@ public class PlayerController : MonoBehaviour
     {
         character = GetComponent<Rigidbody2D>();
         sprite = GetComponent<SpriteRenderer>();
+        bubble = GameObject.Find("Bubble").GetComponent<SpriteRenderer>();
         timerDisplay = GameObject.Find("Timer").GetComponent<Text>();
         animator = GetComponent<Animator>();
         var audioSources = GetComponents<AudioSource>();
@@ -77,7 +79,12 @@ public class PlayerController : MonoBehaviour
         isGrounded();
         fall();
         checkForCollision();
-        if (shielded) applyShield();
+        if (shielded)
+        {
+            applyShield();
+            bubble.transform.position = new Vector2(this.transform.position.x - 0.05f, this.transform.position.y - 0.2f);
+        }
+        else bubble.transform.position = new Vector2(0.0f, -15.0f);
         if (slowed) slowGame();
     }
 
@@ -135,33 +142,35 @@ public class PlayerController : MonoBehaviour
 
     void isGrounded()
     {
-        if (!flipped && transform.position.y <= -2.05f)
+        if (!flipped && transform.position.y <= -1.80f)
         {           
             grounded = true;
             animator.SetTrigger("run");
+            transform.position = new Vector2(-5.5f, -1.79f);
         }
-        else if (flipped && transform.position.y >= 2.05f)
+        else if (flipped && transform.position.y >= 2.35f)
         {            
             grounded = true;
-            animator.SetTrigger("run");           
+            animator.SetTrigger("run");
+            transform.position = new Vector2(-5.5f, 2.34f);
         }
         else if (!flipped)
         {
-            if (transform.position.y > 2.05f)
+            if (transform.position.y > 2.35f)
             {
                 fallSpeed = 0;
-                transform.position = new Vector2(transform.position.x, 2.05f);
+                transform.position = new Vector2(transform.position.x, 2.35f);
             }
             grounded = Physics2D.Raycast(transform.position, -Vector2.up, 0.5f);
         }
         else
         {
-            if (transform.position.y < -2.05f)
+            if (transform.position.y < -1.80f)
             {
                 fallSpeed = 0;
-                transform.position = new Vector2(transform.position.x, -2.05f);
+                transform.position = new Vector2(transform.position.x, -1.80f);
             }
-            grounded = Physics2D.Raycast(transform.position, -Vector2.down, 0.6f);
+            grounded = Physics2D.Raycast(transform.position, -Vector2.down, 0.5f);
         }
 
 		if (grounded)
