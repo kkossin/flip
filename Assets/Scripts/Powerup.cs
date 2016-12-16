@@ -8,7 +8,10 @@ public class Powerup : MonoBehaviour {
 
     void Start()
     {
-        speedHoriz = GameObject.Find("Level Manager").GetComponent<LevelController>().speed * 1.25f;
+        if (tag != "Rocket")
+        {
+            speedHoriz = GameObject.Find("Level Manager").GetComponent<LevelController>().speed * 1.25f;
+        }
         speedVerti = Random.Range(0.01f, 0.05f); //generate random vertical speed
         int direction = Random.Range(1, 3);      //generate random direction
         if (direction == 2)
@@ -24,11 +27,11 @@ public class Powerup : MonoBehaviour {
             this.transform.position = new Vector2(this.transform.position.x - speedHoriz, this.transform.position.y + speedVerti);
         }
 
-        if (speedVerti < 0.0f && this.transform.position.y < -2.3f)
+        if (speedVerti < 0.0f && this.transform.position.y < -2.1f)
         {
             speedVerti = -speedVerti;
         }
-        if (speedVerti > 0.0f && this.transform.position.y > 2.3f)
+        if (speedVerti > 0.0f && this.transform.position.y > 2.6f)
         {
             speedVerti = -speedVerti;
         }
