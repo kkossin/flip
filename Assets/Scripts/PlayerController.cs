@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -12,7 +13,7 @@ public class PlayerController : MonoBehaviour
     private bool recorded;
     public bool stopped;
     public int lives = 0;
-    public int timer = 0;
+    private int timer = 0;
 
     private float jumpSpeed = 7;
     private float fallSpeed = 6;
@@ -23,6 +24,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D character;
     private SpriteRenderer sprite;
     private Animator animator;
+    private Text timerDisplay;
     private RaycastHit2D hitRight; //shoots right
     private RaycastHit2D hitUp;    //shoots up
     private RaycastHit2D hitDown;  //shoots down
@@ -33,18 +35,19 @@ public class PlayerController : MonoBehaviour
     {
         character = GetComponent<Rigidbody2D>();
         sprite = GetComponent<SpriteRenderer>();
+        timerDisplay = GameObject.Find("Timer").GetComponent<Text>();
+        animator = GetComponent<Animator>();
+        var audioSources = GetComponents<AudioSource>();
+        switchTrack = audioSources[0];
+        deathTrack = audioSources[1];
+        originalColor = sprite.color;
         grounded = false;
         flipped = false;
         dead = false;
         shielded = false;
         slowed = false;
         recorded = false;
-        stopped = false;
-		animator = GetComponent<Animator>();
-        var audioSources = GetComponents<AudioSource>();
-        switchTrack = audioSources[0];
-        deathTrack = audioSources[1];
-        originalColor = sprite.color;
+        stopped = false;	
     }
 
     void Update()
@@ -333,6 +336,12 @@ public class PlayerController : MonoBehaviour
             if (timer % 30 == 0)
             {
                 sprite.color = Color.green;
+                if (timer % 60 == 0)
+                {
+                    int timerSeconds = timer / 60;
+                    if (timerSeconds == 0) { timerDisplay.text = ""; }
+                    else { timerDisplay.text = timerSeconds.ToString(); }
+                }
             }
             else
             {
@@ -357,6 +366,12 @@ public class PlayerController : MonoBehaviour
         {
             gameSpeed = GameObject.Find("Level Manager").GetComponent<LevelController>().speed;
             GameObject.Find("Level Manager").GetComponent<LevelController>().speed = gameSpeed / 2;
+        }
+        if (timer % 60 == 0)
+        {
+            int timerSeconds = timer / 60;
+            if (timerSeconds == 0) { timerDisplay.text = ""; }
+            else { timerDisplay.text = timerSeconds.ToString(); }
         }
         if (timer > 0)
         {

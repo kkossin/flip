@@ -13,7 +13,8 @@ public class LevelController : MonoBehaviour {
 
     public int score = 0;
     public int difficulty;
-    public Text timeDisplay;
+    public Text scoreDisplay;
+    public Text highScoreDisplay;
     public Text livesDisplay;
 
     public GameObject levelPlain; //must be a better way to do this...
@@ -43,14 +44,21 @@ public class LevelController : MonoBehaviour {
     void Start()
     {
         GetComponent<AudioSource>().Play();
-        timeDisplay = GameObject.Find("Score").GetComponent<Text>();
+        scoreDisplay = GameObject.Find("Score").GetComponent<Text>();
+        highScoreDisplay = GameObject.Find("High Score").GetComponent<Text>();       
         livesDisplay = GameObject.Find("Lives").GetComponent<Text>();
         generate = false;
 
         if (GameObject.Find("Settings") != null)
         {
             difficulty = GameObject.Find("Settings").GetComponent<FlipMenu>().difficulty;
+            highScoreDisplay.text = "High Score: " + GameObject.Find("Settings").GetComponent<FlipMenu>().getScore(0);
         }
+        else
+        {
+            highScoreDisplay.text = "High Score: None";
+        }
+
         switch (difficulty)
         {
             case 0:
@@ -103,7 +111,7 @@ public class LevelController : MonoBehaviour {
             score += (int)Time.timeScale;
         }
       
-        timeDisplay.text = "Score: " + score.ToString() + "00";
+        scoreDisplay.text = "Score: " + score.ToString() + "00";
         livesDisplay.text = "Lives: " + GameObject.Find("Character").GetComponent<PlayerController>().lives;
 
         if (generate)
